@@ -71,13 +71,8 @@ export default {
             v => (v && v.length >= 1) || 'Collecitble Details must be greater than 1 character',
         ],
     }),
-    mounted() {
-        this.init()
-    },
+    mounted() {},
     methods: {
-        init() {
-            console.log(window.hash)
-        },
         addNFT() {
             this.isLoading = true
             if (this.$refs.form.validate() && this.$store.state.selectedAvatar !== '') {
@@ -91,7 +86,6 @@ export default {
                 }
                 window.hash.triggerSmartContract(data, (err, res) => {
                     if (err) {
-                        console.log('something went wrong whilst adding new collectible...')
                         this.error('Something went wrong please try again!!')
                         this.isLoading = false
                     } else {
@@ -103,11 +97,9 @@ export default {
         },
         closeModal() {
             this.$store.state.newNFTDialog = !this.$store.state.newNFTDialog
-            console.log('closedModal: ', this.$store.state.newNFTDialog)
         },
         openDialogCollectibleAvatar() {
             this.$store.state.avatarSelectDialog = true
-            console.log('openinig: ', this.$store.state.avatarSelectDialog)
         },
         error(message) {
             swal.fire({

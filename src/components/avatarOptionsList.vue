@@ -51,7 +51,6 @@ export default {
         selectImage(image) {
             this.$store.state.avatarSelectDialog = false
             this.$store.state.selectedAvatar = image.url
-            console.log('selectedImage: ', image)
         },
         closeAvatarList() {
             this.$store.state.avatarSelectDialog = false

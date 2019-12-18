@@ -108,50 +108,8 @@ export default {
     },
     props: ['dialognewnft'],
     data: () => ({
-        soldCollectibles: [{
-                id: Math.round(Math.random() * 10000, 5),
-                name: "Jumanji",
-                price: Math.round(Math.random() * 10, 5),
-                cryptoAvatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRfRMLQSvs_jU1hBU1-0a3zcirBl9jOsx30SK1RBc8ZSFzOsT4X',
-                detail: "Halloooo. I'm Chubby Bubbleshands. I was once a barista at a cat café. I'm thinking of dying my fur a metallic shade of rainbow. Do you think it will suit me? I'm single and ready to mingle."
-            },
-            {
-                id: Math.round(Math.random() * 10000, 5),
-                name: "Jumanji",
-                price: Math.round(Math.random() * 10, 5),
-                cryptoAvatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRfRMLQSvs_jU1hBU1-0a3zcirBl9jOsx30SK1RBc8ZSFzOsT4X',
-                detail: "Halloooo. I'm Chubby Bubbleshands. I was once a barista at a cat café. I'm thinking of dying my fur a metallic shade of rainbow. Do you think it will suit me? I'm single and ready to mingle. "
-            },
-            {
-                id: Math.round(Math.random() * 10000, 5),
-                name: "Jumanji",
-                price: Math.round(Math.random() * 10, 5),
-                cryptoAvatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRfRMLQSvs_jU1hBU1-0a3zcirBl9jOsx30SK1RBc8ZSFzOsT4X',
-                detail: "Halloooo. I'm Chubby Bubbleshands. I was once a barista at a cat café. I'm thinking of dying my fur a metallic shade of rainbow. Do you think it will suit me? I'm single and ready to mingle."
-            },
-        ],
-        collectedCollectibles: [{
-                id: Math.round(Math.random() * 10000, 5),
-                name: "Jumanji",
-                price: Math.round(Math.random() * 10, 5),
-                cryptoAvatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRfRMLQSvs_jU1hBU1-0a3zcirBl9jOsx30SK1RBc8ZSFzOsT4X',
-                detail: "Halloooo. I'm Chubby Bubbleshands. I was once a barista at a cat café. I'm thinking of dying my fur a metallic shade of rainbow. Do you think it will suit me? I'm single and ready to mingle."
-            },
-            {
-                id: Math.round(Math.random() * 10000, 5),
-                name: "Jumanji",
-                price: Math.round(Math.random() * 10, 5),
-                cryptoAvatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRfRMLQSvs_jU1hBU1-0a3zcirBl9jOsx30SK1RBc8ZSFzOsT4X',
-                detail: "Halloooo. I'm Chubby Bubbleshands. I was once a barista at a cat café. I'm thinking of dying my fur a metallic shade of rainbow. Do you think it will suit me? I'm single and ready to mingle. "
-            },
-            {
-                id: Math.round(Math.random() * 10000, 5),
-                name: "Jumanji",
-                price: Math.round(Math.random() * 10, 5),
-                cryptoAvatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRfRMLQSvs_jU1hBU1-0a3zcirBl9jOsx30SK1RBc8ZSFzOsT4X',
-                detail: "Halloooo. I'm Chubby Bubbleshands. I was once a barista at a cat café. I'm thinking of dying my fur a metallic shade of rainbow. Do you think it will suit me? I'm single and ready to mingle."
-            },
-        ],
+        soldCollectibles: [],
+        collectedCollectibles: [],
         isDialogNewNFT: false,
         tab: null,
         isLoading: false,
@@ -173,10 +131,9 @@ export default {
             window.hash.triggerSmartContract(data, (err, res) => {
                 if (err) {
                     //error case
-                    console.log('Error:::', err);
+                    this.raised = 0
                 } else {
                     //success case
-                    console.log('Success:::', res);
                     this.raised = res[0]
                 }
             });
@@ -193,11 +150,9 @@ export default {
             window.hash.triggerSmartContract(data, (err, res) => {
                 if (err) {
                     //error case
-                    console.log('Error:::', err);
                     this.isLoading = false
                 } else {
                     //success case
-                    console.log('Success:::', res);
                     if (!res[0]) {
                         this.warnUser()
                     } else {
@@ -218,10 +173,7 @@ export default {
                 abi: `[{"constant":true,"inputs":[],"name":"getUserSoldCollectiblKeys","outputs":[{"name":"","type":"uint256[]"}],"payable":false,"stateMutability":"view","type":"function"}]`
             }
             window.hash.triggerSmartContract(data, (err, res) => {
-                if (err) {
-                    console.log('something went wrong whilst loading user sold collectibles...')
-                } else {
-                    console.log('user listed collectible keys: ', res)
+                if (!err) {
                     if (res[0].length > 0) {
                         res[0].map((key) => {
                             data = {
@@ -232,9 +184,7 @@ export default {
                                 abi: [`{"constant":true,"inputs":[{"name":"collectibleID","type":"uint256"}],"name":"getCollectible","outputs":[{"name":"","type":"uint256"},{"name":"","type":"string"},{"name":"","type":"string"},{"name":"","type":"string"},{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"}`],
                             }
                             window.hash.triggerSmartContract(data, (err, res) => {
-                                if (err) {
-                                    console.log('something went wrong whilst fetching collectible details...')
-                                } else {
+                                if (!err) {
                                     this.soldCollectibles.push({
                                         id: key,
                                         name: res[[3]],
@@ -260,10 +210,7 @@ export default {
                 abi: `[{"constant":true,"inputs":[],"name":"getUserSoldCollectiblKeys","outputs":[{"name":"","type":"uint256[]"}],"payable":false,"stateMutability":"view","type":"function"}]`
             }
             window.hash.triggerSmartContract(data, (err, res) => {
-                if (err) {
-                    console.log('something went wrong whilst loading user collected collectibles...')
-                } else {
-                    console.log('user listed collectible keys: ', res)
+                if (!err) {
                     if (res[0].length > 0) {
                         res[0].map((key) => {
                             data = {
@@ -274,9 +221,7 @@ export default {
                                 abi: [`{"constant":true,"inputs":[{"name":"collectibleID","type":"uint256"}],"name":"getCollectible","outputs":[{"name":"","type":"uint256"},{"name":"","type":"string"},{"name":"","type":"string"},{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"}`],
                             }
                             window.hash.triggerSmartContract(data, (err, res) => {
-                                if (err) {
-                                    console.log('something went wrong whilst fetching collectible details...')
-                                } else {
+                                if (!err) {
                                     this.collectedCollectibles.push({
                                         id: key,
                                         name: res[[3]],
@@ -312,11 +257,7 @@ export default {
                         abi: [`{"constant":false,"inputs":[],"name":"registerUser","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"}`],
                     }
                     window.hash.triggerSmartContract(data, (err, res) => {
-                        if (err) {
-                            console.log('something went wrong whilst registering user...')
-                            this.error('Something went wrong please try again!!')
-                            this.isLoading = false
-                        } else {
+                        if (!err) {
                             this.success('Succesfully registered')
                             this.isLoading = false
                         }
@@ -325,7 +266,6 @@ export default {
             })
         },
         sellNFT(nft) {
-            console.log('selling nft: ', nft)
             var data = {
                 contractid: this.$store.state.contractID,
                 memo: "approving collectible transfer",
@@ -335,7 +275,6 @@ export default {
             }
             window.hash.triggerSmartContract(data, (err, res) => {
                 if (err) {
-                    console.log('something went wrong whilst selling collectible...')
                     this.error('Something went wrong please try again!!')
                     this.isLoading = false
                 } else {
@@ -353,7 +292,6 @@ export default {
             }
             window.hash.triggerSmartContract(data, (err, res) => {
                 if (err) {
-                    console.log('something went wrong whilst selling collectible...')
                     this.error('Something went wrong please try again!!')
                     this.isLoading = false
                 } else {
@@ -380,12 +318,8 @@ export default {
         registerCollector() {
 
         },
-        closeModal(value) {
-            console.log('close Modal: ', value)
-        },
         openNFTModal() {
             this.$store.state.newNFTDialog = true
-            console.log(this.$store.state.newNFTDialog)
         }
 
     }
