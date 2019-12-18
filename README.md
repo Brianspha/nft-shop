@@ -29,33 +29,28 @@ This website is not fully tested due to the limitations presented by the compose
 ### Issues
 
 The following issues were identified during the development of the POC
-1. Uncaught (in promise) TypeError: Cannot read property 'parentNode' of undefined
+1. ``Uncaught (in promise) TypeError: Cannot read property 'parentNode' of undefined
     at _callee$ (content.js:160020)
     at tryCatch (content.js:148965)
     at Generator.invoke [as _invoke] (content.js:149191)
     at Generator.prototype.<computed> [as next] (content.js:149017)
     at tryCatch (content.js:148965)
     at invoke (content.js:149055)
-    at content.js:149065 </br>
+    at content.js:149065`` 
 The above error prevented me from testing the website as such i do not know if the website would work as expected however all functions have been placed accordingly in the instance that the above error is fixed
 2. No init function
 The constant copying and pasting of a functions ABI resulted in the development time of the POC being longer i do suggest that the devs of composer have an init function that allows for the initialisation of the smartcontract like below
-``
-window.hash.init({
+``window.hash.init({
     contractABI:[{}],
     contractID:'0.0xxxx'
 })
 ``
 Then developers can simply call the function of the contract like so
-
 ``
 window.hash.contract.mintToken().then((result,err)={
-
 }).catch((err){
-
 })
 ``
-
 Instead of what exists this will save allot of time because i dont have to copy paste the function ABI when i make changes to the function
 3. I also suggest we have a function that allows developers to get the current active account on composer maybe someting along these lines
 ``
