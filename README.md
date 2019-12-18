@@ -61,3 +61,6 @@ window.hash.defaultAccount
 6. Improve on the UX of the composer plugin theres too much going on there and its very off putting 
 7. Local dev tool kit if possible have a local dev kit for developers to use on their local machines again this will save allot of time
 8. Improve the console website the UX of the website is quite bad but i understand its a WIP but i expected better
+
+
+I didnt deploy to github pages because i thought it be better to just run the POC locally just to avoid issues

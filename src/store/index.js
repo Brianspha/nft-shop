@@ -4,7 +4,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state:{
-        contractID:'0.0.140204',
+        contractID:'0.0.140208',
         registered:false,
         nftDetailsDialog:false,
         newNFTDialog:false,
