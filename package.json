@@ -10,7 +10,7 @@
   "dependencies": {
     "bytes": "^3.1.0",
     "core-js": "^3.4.3",
-    "jpeg-js": "^0.3.6",
+    "jpeg-js": "^0.4.0",
     "sweetalert2": "^9.5.3",
     "utf8-string-bytes": "^1.0.3",
     "utf8-to-bytes": "^0.1.2",
